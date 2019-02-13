@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package example;
+
+import public "github.com/william-lg/go-proto-validators/validator.proto";
+
+message Version {
+    optional int32 major    = 1 [(validator.field) = {msg_exists:true int_gt:0}];
+    optional int32 mior    = 2 [(validator.field) = {msg_exists:true int_gt:0}];
+    optional int32 revision = 3 [(validator.field) = {msg_exists:true int_gt:0}];
+}
+
+message ReqHeader {
+    optional int64 seq_id        = 1  [(validator.field) = {msg_exists:true int_gt:0}];
+    optional Version version     = 2  [(validator.field) = {msg_exists:true}]; //协议版本号
+    optional int64 caller_id     = 3 ; //调用方id
+    optional string caller_name  = 4; //调用方名称
+    optional string caller_ip    = 5; //调用方机器ip
+    optional int64 timestamp     = 6 ; //时间戳
+    optional string token        = 7; //token
+}

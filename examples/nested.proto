@@ -1,10 +1,10 @@
 syntax = "proto3";
 package validator.examples;
-import "github.com/mwitkow/go-proto-validators/validator.proto";
+import "github.com/william-lg/go-proto-validators/validator.proto";
 
 message InnerMessage {
   // some_integer can only be in range (1, 100).
-  int32 some_integer = 1 [(validator.field) = {int_gt: 0, int_lt: 100}];
+  int32 some_integer = 1 [(validator.field) = {int_gt: 0 int_lt: 100}];
 }
 
 message OuterMessage {

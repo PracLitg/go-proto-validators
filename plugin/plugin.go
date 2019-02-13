@@ -60,7 +60,7 @@ import (
 	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
 	"github.com/gogo/protobuf/vanity"
-	"github.com/mwitkow/go-proto-validators"
+	"github.com/william-lg/go-proto-validators"
 )
 
 type plugin struct {
@@ -164,10 +164,13 @@ func (p *plugin) generateProto2Message(file *generator.FileDescriptor, message *
 		if fieldValidator == nil && !field.IsMessage() {
 			continue
 		}
-		if p.validatorWithMessageExists(fieldValidator) {
-			fmt.Fprintf(os.Stderr, "WARNING: field %v.%v is a proto2 message, validator.msg_exists has no effect\n", ccTypeName, fieldName)
-		}
 		variableName := "this." + fieldName
+		msgExist := p.validatorWithMessageExists(fieldValidator)
+		if msgExist {
+			//fmt.Fprintf(os.Stderr, "WARNING: field %v.%v is a proto2 message, validator.msg_exists has no effect\n", ccTypeName, fieldName)
+			p.generateMsgExistValidator(variableName, ccTypeName, fieldName, fieldValidator)
+		}
+
 		repeated := field.IsRepeated()
 		nullable := gogoproto.IsNullable(field)
 		// For proto2 syntax, only Gogo generates non-pointer fields
@@ -180,8 +183,10 @@ func (p *plugin) generateProto2Message(file *generator.FileDescriptor, message *
 				variableName = "item"
 			}
 		} else if nullable {
-			p.P(`if `, variableName, ` != nil {`)
-			p.In()
+			if !msgExist {
+				p.P(`if `, variableName, ` != nil {`)
+				p.In()
+			}
 			if !field.IsBytes() {
 				variableName = "*(" + variableName + ")"
 			}
@@ -225,7 +230,7 @@ func (p *plugin) generateProto2Message(file *generator.FileDescriptor, message *
 				p.Out()
 				p.P(`}`)
 			}
-		} else if nullable {
+		} else if nullable && !msgExist {
 			// end the if around nullable
 			p.Out()
 			p.P(`}`)
@@ -331,6 +336,16 @@ func (p *plugin) generateProto3Message(file *generator.FileDescriptor, message *
 		}
 	}
 	p.P(`return nil`)
+	p.Out()
+	p.P(`}`)
+}
+
+// this is used for proto2: no test for proto3
+func (p *plugin) generateMsgExistValidator(variableName string, ccTypeName string, fieldName string, fv *validator.FieldValidator) {
+	p.P(`if `, variableName, ` == nil {`)
+	p.In()
+	errorStr := fmt.Sprintf(`cannot be nil`)
+	p.generateErrorString(variableName, fieldName, errorStr, fv)
 	p.Out()
 	p.P(`}`)
 }
