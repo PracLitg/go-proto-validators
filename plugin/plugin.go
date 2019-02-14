@@ -344,7 +344,7 @@ func (p *plugin) generateProto3Message(file *generator.FileDescriptor, message *
 func (p *plugin) generateMsgExistValidator(variableName string, ccTypeName string, fieldName string, fv *validator.FieldValidator) {
 	p.P(`if `, variableName, ` == nil {`)
 	p.In()
-	errorStr := fmt.Sprintf(`cannot be nil`)
+	errorStr := fmt.Sprintf(`cannot be ommitted: %s is required`, fieldName)
 	p.generateErrorString(variableName, fieldName, errorStr, fv)
 	p.Out()
 	p.P(`}`)

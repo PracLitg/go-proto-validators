@@ -16,36 +16,45 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+func (this *Tmp) Validate() error {
+	return nil
+}
 func (this *Version) Validate() error {
 	if this.Major == nil {
-		return github_com_william_lg_go_proto_validators.FieldError("Major", fmt.Errorf(`value '%v' must cannot be nil`, this.Major))
+		return github_com_william_lg_go_proto_validators.FieldError("Major", fmt.Errorf(`value '%v' must cannot be ommitted: Major is required`, this.Major))
 	}
 	if !(*(this.Major) >= 0) {
 		return github_com_william_lg_go_proto_validators.FieldError("Major", fmt.Errorf(`value '%v' must be greater than '0'`, *(this.Major)))
 	}
 	if this.Mior == nil {
-		return github_com_william_lg_go_proto_validators.FieldError("Mior", fmt.Errorf(`value '%v' must cannot be nil`, this.Mior))
+		return github_com_william_lg_go_proto_validators.FieldError("Mior", fmt.Errorf(`value '%v' must cannot be ommitted: Mior is required`, this.Mior))
 	}
 	if !(*(this.Mior) >= 0) {
 		return github_com_william_lg_go_proto_validators.FieldError("Mior", fmt.Errorf(`value '%v' must be greater than '0'`, *(this.Mior)))
 	}
 	if this.Revision == nil {
-		return github_com_william_lg_go_proto_validators.FieldError("Revision", fmt.Errorf(`value '%v' must cannot be nil`, this.Revision))
+		return github_com_william_lg_go_proto_validators.FieldError("Revision", fmt.Errorf(`value '%v' must cannot be ommitted: Revision is required`, this.Revision))
 	}
 	if !(*(this.Revision) >= 0) {
 		return github_com_william_lg_go_proto_validators.FieldError("Revision", fmt.Errorf(`value '%v' must be greater than '0'`, *(this.Revision)))
+	}
+	if this.Tmp == nil {
+		return github_com_william_lg_go_proto_validators.FieldError("Tmp", fmt.Errorf(`value '%v' must cannot be ommitted: Tmp is required`, this.Tmp))
+	}
+	if err := github_com_william_lg_go_proto_validators.CallValidatorIfExists(&(*(this.Tmp))); err != nil {
+		return github_com_william_lg_go_proto_validators.FieldError("Tmp", err)
 	}
 	return nil
 }
 func (this *ReqHeader) Validate() error {
 	if this.SeqId == nil {
-		return github_com_william_lg_go_proto_validators.FieldError("SeqId", fmt.Errorf(`value '%v' must cannot be nil`, this.SeqId))
+		return github_com_william_lg_go_proto_validators.FieldError("SeqId", fmt.Errorf(`value '%v' must cannot be ommitted: SeqId is required`, this.SeqId))
 	}
 	if !(*(this.SeqId) >= 0) {
 		return github_com_william_lg_go_proto_validators.FieldError("SeqId", fmt.Errorf(`value '%v' must be greater than '0'`, *(this.SeqId)))
 	}
 	if this.Version == nil {
-		return github_com_william_lg_go_proto_validators.FieldError("Version", fmt.Errorf(`value '%v' must cannot be nil`, this.Version))
+		return github_com_william_lg_go_proto_validators.FieldError("Version", fmt.Errorf(`value '%v' must cannot be ommitted: Version is required`, this.Version))
 	}
 	if err := github_com_william_lg_go_proto_validators.CallValidatorIfExists(&(*(this.Version))); err != nil {
 		return github_com_william_lg_go_proto_validators.FieldError("Version", err)

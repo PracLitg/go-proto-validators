@@ -4,10 +4,15 @@ package example;
 
 import "github.com/william-lg/go-proto-validators/validator.proto";
 
+message Tmp {
+    optional int32 major    = 1;
+}
+
 message Version {
     optional int32 major    = 1 [(validator.field) = {msg_exists:true int_gte:0}];
     optional int32 mior    = 2 [(validator.field) = {msg_exists:true int_gte:0}];
     optional int32 revision = 3 [(validator.field) = {msg_exists:true int_gte:0}];
+    optional Tmp tmp = 4 [(validator.field) = {msg_exists:true}];
 }
 
 message ReqHeader {
