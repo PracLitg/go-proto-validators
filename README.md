@@ -14,11 +14,11 @@ Let's take the following `proto3` snippet:
 ```proto
 syntax = "proto3";
 package validator.examples;
-import "github.com/mwitkow/go-proto-validators/validator.proto";
+import "github.com/william-lg/go-proto-validators/validator.proto";
 
 message InnerMessage {
   // some_integer can only be in range (1, 100).
-  int32 some_integer = 1 [(validator.field) = {int_gt: 0, int_lt: 100}];
+  int32 some_integer = 1 [(validator.field) = {int_gte: 0, int_lte: 100}];
   // some_float can only be in range (0;1).
   double some_float = 2 [(validator.field) = {float_gte: 0, float_lte: 1}];
 }
@@ -31,7 +31,7 @@ message OuterMessage {
 }
 ```
 
-First, the **`required` keyword is back** for `proto3`, under the guise of `msg_exists`. The painful `if-nil` checks are taken care of!
+First, the **`required` keyword is back** for `proto3`(`proto2` can also use it), under the guise of `msg_exists`. The painful `if-nil` checks are taken care of!
 
 Second, the expected values in fields are now part of the contract `.proto` file. No more hunting down conditions in code!
 
@@ -83,7 +83,7 @@ export PATH=${PATH}:${GOPATH}/bin
 Then, do the usual
 
 ```sh
-go get github.com/mwitkow/go-proto-validators/protoc-gen-govalidators
+go get github.com/william-lg/go-proto-validators/protoc-gen-govalidators
 ```
 
 Your `protoc` builds probably look very simple like:
