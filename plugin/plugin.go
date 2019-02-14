@@ -92,7 +92,7 @@ func (p *plugin) Generate(file *generator.FileDescriptor) {
 	p.PluginImports = generator.NewPluginImports(p.Generator)
 	p.regexPkg = p.NewImport("regexp")
 	p.fmtPkg = p.NewImport("fmt")
-	p.validatorPkg = p.NewImport("github.com/mwitkow/go-proto-validators")
+	p.validatorPkg = p.NewImport("github.com/william-lg/go-proto-validators")
 
 	for _, msg := range file.Messages() {
 		if msg.DescriptorProto.GetOptions().GetMapEntry() {
@@ -112,7 +112,7 @@ func getFieldValidatorIfAny(field *descriptor.FieldDescriptorProto) *validator.F
 	if field.Options != nil {
 		v, err := proto.GetExtension(field.Options, validator.E_Field)
 		if err == nil && v.(*validator.FieldValidator) != nil {
-			return (v.(*validator.FieldValidator))
+			return v.(*validator.FieldValidator)
 		}
 	}
 	return nil
@@ -351,18 +351,18 @@ func (p *plugin) generateMsgExistValidator(variableName string, ccTypeName strin
 }
 
 func (p *plugin) generateIntValidator(variableName string, ccTypeName string, fieldName string, fv *validator.FieldValidator) {
-	if fv.IntGt != nil {
-		p.P(`if !(`, variableName, ` > `, fv.IntGt, `) {`)
+	if fv.IntGte != nil {
+		p.P(`if !(`, variableName, ` >= `, fv.IntGte, `) {`)
 		p.In()
-		errorStr := fmt.Sprintf(`be greater than '%d'`, fv.GetIntGt())
+		errorStr := fmt.Sprintf(`be greater than '%d'`, fv.GetIntGte())
 		p.generateErrorString(variableName, fieldName, errorStr, fv)
 		p.Out()
 		p.P(`}`)
 	}
-	if fv.IntLt != nil {
-		p.P(`if !(`, variableName, ` < `, fv.IntLt, `) {`)
+	if fv.IntLte != nil {
+		p.P(`if !(`, variableName, ` <= `, fv.IntLte, `) {`)
 		p.In()
-		errorStr := fmt.Sprintf(`be less than '%d'`, fv.GetIntLt())
+		errorStr := fmt.Sprintf(`be less than '%d'`, fv.GetIntLte())
 		p.generateErrorString(variableName, fieldName, errorStr, fv)
 		p.Out()
 		p.P(`}`)

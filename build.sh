@@ -2,8 +2,7 @@
 
 # go
 protoc \
-    -I ./validator.proto \
     -I ./examples/ \
-    --go_out=plugins=grpc:examples/go/ \
+    --go_out=plugins=grpc:./examples/go \
     --govalidators_out=examples/go/ \
-    examples/header.proto
+    ./examples/header.proto

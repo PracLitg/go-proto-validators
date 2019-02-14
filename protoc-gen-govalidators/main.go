@@ -4,14 +4,13 @@
 package main
 
 import (
+	"github.com/gogo/protobuf/proto"
+	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
+	validator_plugin "github.com/william-lg/go-proto-validators/plugin"
 	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
-
-	"github.com/gogo/protobuf/proto"
-	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
-	validator_plugin "github.com/william-lg/go-proto-validators/plugin"
 )
 
 func main() {
