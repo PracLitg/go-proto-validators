@@ -238,7 +238,7 @@ func (p *plugin) generateProto2Message(file *generator.FileDescriptor, message *
 	}
 	p.P(`return nil`)
 	p.Out()
-	p.P(`}`)
+	p.P(`}`, "\n")
 }
 
 func (p *plugin) generateProto3Message(file *generator.FileDescriptor, message *generator.Descriptor) {

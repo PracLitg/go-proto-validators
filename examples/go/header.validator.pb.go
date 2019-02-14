@@ -19,6 +19,7 @@ var _ = math.Inf
 func (this *Tmp) Validate() error {
 	return nil
 }
+
 func (this *Version) Validate() error {
 	if this.Major == nil {
 		return github_com_william_lg_go_proto_validators.FieldError("Major", fmt.Errorf(`value '%v' must cannot be ommitted: Major is required`, this.Major))
@@ -46,6 +47,7 @@ func (this *Version) Validate() error {
 	}
 	return nil
 }
+
 func (this *ReqHeader) Validate() error {
 	if this.SeqId == nil {
 		return github_com_william_lg_go_proto_validators.FieldError("SeqId", fmt.Errorf(`value '%v' must cannot be ommitted: SeqId is required`, this.SeqId))
